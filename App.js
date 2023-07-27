@@ -7,6 +7,7 @@ import { LoginScreen } from "./screens/LoginScreen";
 import { RegistrationScreen } from "./screens/RegistrationScreen";
 import { Home } from "./screens/Home";
 import { CommentsScreen } from "./screens/CommentsScreen";
+import { MapScreen } from "./screens/MapScreen";
 
 import { BackButtonComponent } from "./components/BackButtonComponent";
 
@@ -51,6 +52,19 @@ export default function App() {
           component={CommentsScreen}
           options={{
             title: "Коментарі",
+            headerTitleAlign: "center",
+            headerShown: true,
+            headerLeft: () => <BackButtonComponent />,
+            headerStyle: {
+              borderBottomWidth: 1,
+            },
+          }}
+        />
+        <MainStack.Screen
+          name="Map"
+          component={MapScreen}
+          options={{
+            title: "Мапа",
             headerTitleAlign: "center",
             headerShown: true,
             headerLeft: () => <BackButtonComponent />,
