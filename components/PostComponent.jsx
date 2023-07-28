@@ -1,8 +1,26 @@
-import { View, Image, Text, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
+import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 import { CommentIcon, LocationIcon } from "../components/icons/icons";
 
-export const PostComponent = ({ way, name, country, commentsNumber }) => {
+export const PostComponent = ({
+  way,
+  name,
+  country,
+  commentsNumber,
+  coords,
+}) => {
+  const navigation = useNavigation();
+
+  const handleCommentsRedirect = (way) => {
+    navigation.navigate("Comments", { way: way });
+  };
+
+  const handleMapRedirect = (coords) => {
+    navigation.navigate("Map", { coords: coords });
+  };
+
   return (
     <View style={{ marginBottom: 32 }}>
       <View style={{ marginBottom: 8 }}>
@@ -11,7 +29,9 @@ export const PostComponent = ({ way, name, country, commentsNumber }) => {
       <Text style={styles.nameText}>{name}</Text>
       <View style={styles.aboutContainer}>
         <View style={styles.aboutLeftContainer}>
-          <CommentIcon />
+          <TouchableOpacity onPress={() => handleCommentsRedirect(way)}>
+            <CommentIcon />
+          </TouchableOpacity>
           <Text
             style={[
               styles.text,
@@ -24,7 +44,9 @@ export const PostComponent = ({ way, name, country, commentsNumber }) => {
           </Text>
         </View>
         <View style={styles.aboutRightContainer}>
-          <LocationIcon />
+          <TouchableOpacity onPress={() => handleMapRedirect(coords)}>
+            <LocationIcon />
+          </TouchableOpacity>
           <Text
             style={[
               styles.text,

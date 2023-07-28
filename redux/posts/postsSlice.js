@@ -5,27 +5,39 @@ const initialState = {
   posts: [
     {
       id: 1,
-      imageUrl: "../components/images/forest.jpg",
+      imageUrl: require("../../components/images/forest.jpg"),
       name: "Ліс",
       commentsNumber: 8,
       likes: 153,
       location: "Ivano-Frankivs'k Region, Ukraine",
+      coords: {
+        latitude: 48.9422375120834,
+        longitude: 24.658751258383163,
+      },
     },
     {
       id: 2,
-      imageUrl: "../components/images/sunset.jpg",
+      imageUrl: require("../../components/images/sunset.jpg"),
       name: "Захід на Чорному морі",
       commentsNumber: 3,
       likes: 200,
-      location: "Ukraine",
+      location: "Odesa, Ukraine",
+      coords: {
+        latitude: 46.475176,
+        longitude: 30.7662,
+      },
     },
     {
       id: 3,
-      imageUrl: "../components/images/house.jpg",
+      imageUrl: require("../../components/images/house.jpg"),
       name: "Старий будиночок у Венеції",
       commentsNumber: 50,
       likes: 200,
-      location: "Ukraine",
+      location: "Venice, Italy",
+      coords: {
+        latitude: 45.439489,
+        longitude: 12.323061,
+      },
     },
   ],
 };

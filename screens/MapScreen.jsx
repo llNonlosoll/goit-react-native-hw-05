@@ -1,22 +1,24 @@
+import { useRoute } from "@react-navigation/native";
 import MapView, { Marker } from "react-native-maps";
 import { View, StyleSheet, Dimensions } from "react-native";
 
-export const MapScreen = ({ route }) => {
-  const { longitude, latitude } = route.params.location;
+export const MapScreen = () => {
+  const route = useRoute();
+  const coords = route.params?.coords;
 
   return (
     <View style={styles.container}>
       <MapView
         style={styles.mapStyle}
-        initialRegion={{
-          latitude,
-          longitude,
+        region={{
+          ...coords,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
+        mapType="standard"
         minZoomLevel={1}
       >
-        <Marker title="Ти тут" coordinate={{ longitude, latitude }} />
+        {coords && <Marker title="I am here" coordinate={coords} />}
       </MapView>
     </View>
   );
