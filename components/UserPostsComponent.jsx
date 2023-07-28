@@ -10,11 +10,16 @@ export const UserPostsComponent = ({
   country,
   commentsNumber,
   likes,
+  coords,
 }) => {
   const navigation = useNavigation();
 
   const handleCommentsRedirect = (way) => {
     navigation.navigate("Comments", { way: way });
+  };
+
+  const handleMapRedirect = (coords) => {
+    navigation.navigate("Map", { coords: coords });
   };
 
   return (
@@ -60,7 +65,9 @@ export const UserPostsComponent = ({
           </View>
         </View>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
-          <LocationIcon />
+          <TouchableOpacity onPress={() => handleMapRedirect(coords)}>
+            <LocationIcon />
+          </TouchableOpacity>
           <Text
             style={[
               styles.text,

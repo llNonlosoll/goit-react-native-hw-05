@@ -18,7 +18,7 @@ export const MapScreen = () => {
         mapType="standard"
         minZoomLevel={1}
       >
-        {coords && <Marker title="I am here" coordinate={coords} />}
+        {coords && <Marker title="You are here" coordinate={coords} />}
       </MapView>
     </View>
   );

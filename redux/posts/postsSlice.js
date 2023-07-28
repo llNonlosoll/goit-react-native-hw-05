@@ -9,7 +9,7 @@ const initialState = {
       name: "Ліс",
       commentsNumber: 8,
       likes: 153,
-      location: "Ivano-Frankivs'k Region, Ukraine",
+      location: "Ivano-Frankivs'k, Ukraine",
       coords: {
         latitude: 48.9422375120834,
         longitude: 24.658751258383163,

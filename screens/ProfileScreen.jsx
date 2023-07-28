@@ -4,8 +4,11 @@ import {
   Image,
   Text,
   ScrollView,
+  FlatList,
   StyleSheet,
 } from "react-native";
+import { useSelector } from "react-redux";
+import { selectPosts } from "../redux/posts/selectors";
 
 import { BackgroundComponent } from "../components/BackgroundComponent";
 import { UserPostsComponent } from "../components/UserPostsComponent";
@@ -14,6 +17,8 @@ import { LogoutButtonComponent } from "../components/LogoutButtonComponent";
 import { DeleteIcon } from "../components/icons/icons";
 
 export const ProfileScreen = () => {
+  const posts = useSelector(selectPosts);
+
   return (
     <BackgroundComponent>
       <View style={styles.wrapper}>
@@ -27,8 +32,22 @@ export const ProfileScreen = () => {
           </TouchableOpacity>
         </View>
         <Text style={styles.text}>Natali Romanova</Text>
-        <ScrollView>
-          <UserPostsComponent
+
+        <FlatList
+          data={posts}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <UserPostsComponent
+              way={item.imageUrl}
+              name={item.name}
+              commentsNumber={item.commentsNumber}
+              country={item.location}
+              likes={item.likes}
+              coords={item.coords}
+            ></UserPostsComponent>
+          )}
+        ></FlatList>
+        {/* <UserPostsComponent
             way={require("../components/images/forest.jpg")}
             name={"Ліс"}
             commentsNumber={8}
@@ -48,8 +67,7 @@ export const ProfileScreen = () => {
             commentsNumber={50}
             country={"Italy"}
             likes={200}
-          />
-        </ScrollView>
+          /> */}
       </View>
     </BackgroundComponent>
   );
