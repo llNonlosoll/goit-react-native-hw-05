@@ -24,7 +24,11 @@ export const PostComponent = ({
   return (
     <View style={{ marginBottom: 32 }}>
       <View style={{ marginBottom: 8 }}>
-        <Image source={way} resizeMode={"cover"} style={styles.image} />
+        <Image
+          source={{ uri: way }}
+          resizeMode={"cover"}
+          style={styles.image}
+        />
       </View>
       <Text style={styles.nameText}>{name}</Text>
       <View style={styles.aboutContainer}>

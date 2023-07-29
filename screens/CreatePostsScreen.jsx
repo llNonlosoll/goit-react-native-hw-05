@@ -78,7 +78,7 @@ export const CreatePostsScreen = () => {
 
   const handlePostPhoto = () => {
     dispatch(addPost({ photoName, locationName, photoUri, location }));
-    navigation.navigate("Home");
+    navigation.navigate("Home", { screen: "Posts" });
     clearData();
   };
 
