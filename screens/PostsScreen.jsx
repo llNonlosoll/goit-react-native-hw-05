@@ -1,6 +1,5 @@
 import { View, Image, Text, FlatList, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
-
 import { selectPosts } from "../redux/posts/selectors";
 
 import { globalStyles } from "../components/styles/globalStyles";
@@ -31,9 +30,9 @@ export const PostsScreen = () => {
             commentsNumber={item.commentsNumber}
             country={item.location}
             coords={item.coords}
-          ></PostComponent>
+          />
         )}
-      ></FlatList>
+      />
     </View>
   );
 };

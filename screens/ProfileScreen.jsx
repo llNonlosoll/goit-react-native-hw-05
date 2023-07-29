@@ -3,7 +3,6 @@ import {
   TouchableOpacity,
   Image,
   Text,
-  ScrollView,
   FlatList,
   StyleSheet,
 } from "react-native";
@@ -44,9 +43,9 @@ export const ProfileScreen = () => {
               country={item.location}
               likes={item.likes}
               coords={item.coords}
-            ></UserPostsComponent>
+            />
           )}
-        ></FlatList>
+        />
       </View>
     </BackgroundComponent>
   );

@@ -43,7 +43,12 @@ export const CommentsScreen = () => {
           ]}
         >
           <ScrollView>
-            <Image source={way} resizeMode={"cover"} style={styles.image} />
+            <Image
+              source={typeof way === "number" ? way : { uri: way }}
+              resizeMode={"cover"}
+              style={styles.image}
+            />
+
             <CommentComponent
               img={require("../components/images/commentedUserPhoto.png")}
               text={

@@ -144,7 +144,7 @@ export const CreatePostsScreen = () => {
                 />
               </View>
             </View>
-            {photoName !== "" && locationName !== "" ? (
+            {photoName !== "" && locationName !== "" && photoUri !== null ? (
               <TouchableOpacity
                 style={globalStyles.button}
                 onPress={handlePostPhoto}

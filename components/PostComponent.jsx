@@ -25,7 +25,7 @@ export const PostComponent = ({
     <View style={{ marginBottom: 32 }}>
       <View style={{ marginBottom: 8 }}>
         <Image
-          source={{ uri: way }}
+          source={typeof way === "number" ? way : { uri: way }}
           resizeMode={"cover"}
           style={styles.image}
         />
