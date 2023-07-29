@@ -119,7 +119,6 @@ export const CreatePostsScreen = () => {
                     <CameraIcon />
                   </View>
                 </TouchableOpacity>
-                <Image />
               </Camera>
             )}
 
