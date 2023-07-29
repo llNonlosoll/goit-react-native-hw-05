@@ -34,24 +34,6 @@ export const PostsScreen = () => {
           ></PostComponent>
         )}
       ></FlatList>
-      {/* <PostComponent
-          way={require("../components/images/forest.jpg")}
-          name={"Ліс"}
-          commentsNumber={0}
-          country={"Ivano-Frankivs'k Region, Ukraine"}
-        />
-        <PostComponent
-          way={require("../components/images/sunset.jpg")}
-          name={"Захід на Чорному морі"}
-          commentsNumber={0}
-          country={"Odesa, Ukraine"}
-        />
-        <PostComponent
-          way={require("../components/images/house.jpg")}
-          name={"Старий будиночок у Венеції"}
-          commentsNumber={0}
-          country={"Venece, Italy"}
-        /> */}
     </View>
   );
 };

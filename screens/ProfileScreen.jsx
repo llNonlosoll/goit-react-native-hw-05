@@ -47,27 +47,6 @@ export const ProfileScreen = () => {
             ></UserPostsComponent>
           )}
         ></FlatList>
-        {/* <UserPostsComponent
-            way={require("../components/images/forest.jpg")}
-            name={"Ліс"}
-            commentsNumber={8}
-            country={"Ukraine"}
-            likes={153}
-          />
-          <UserPostsComponent
-            way={require("../components/images/sunset.jpg")}
-            name={"Захід на Чорному морі"}
-            commentsNumber={2}
-            country={"Ukraine"}
-            likes={200}
-          />
-          <UserPostsComponent
-            way={require("../components/images/house.jpg")}
-            name={"Старий будиночок у Венеції"}
-            commentsNumber={50}
-            country={"Italy"}
-            likes={200}
-          /> */}
       </View>
     </BackgroundComponent>
   );

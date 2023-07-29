@@ -60,9 +60,6 @@ export const CreatePostsScreen = () => {
     })();
   }, []);
 
-  console.log(hasPermission);
-  console.log(location);
-
   if (hasPermission === null) {
     return <View />;
   }
