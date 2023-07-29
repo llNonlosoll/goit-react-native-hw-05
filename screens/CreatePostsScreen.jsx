@@ -1,4 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import * as Location from "expo-location";
+import { Camera } from "expo-camera";
+import * as MediaLibrary from "expo-media-library";
+import { useDispatch } from "react-redux";
+import { addPost } from "../redux/posts/postsSlice";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   TouchableWithoutFeedback,
@@ -7,6 +13,7 @@ import {
   Platform,
   View,
   Text,
+  Image,
   TextInput,
   TouchableOpacity,
   StyleSheet,
@@ -17,7 +24,70 @@ import { globalStyles } from "../components/styles/globalStyles";
 import { CameraIcon, LocationIcon, TrashIcon } from "../components/icons/icons";
 
 export const CreatePostsScreen = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+  const [location, setLocation] = useState(null);
+  const [hasPermission, setHasPermission] = useState(null);
+  const [photoName, setPhotoName] = useState("");
+  const [locationName, setLocationName] = useState("");
+  const [photoUri, setPhotoUri] = useState(null);
+  const cameraRef = useRef(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      const coords = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      setLocation(coords);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      await MediaLibrary.requestPermissionsAsync();
+
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
+  console.log(hasPermission);
+  console.log(location);
+
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+
+  const clearData = () => {
+    setPhotoName("");
+    setLocationName("");
+    setPhotoUri(null);
+  };
+
+  const handlePostPhoto = () => {
+    dispatch(addPost({ photoName, locationName, photoUri, location }));
+    navigation.navigate("Home");
+    clearData();
+  };
+
+  const makePhoto = async () => {
+    if (cameraRef.current) {
+      const { uri } = await cameraRef.current.takePictureAsync();
+      setPhotoUri(uri);
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -37,18 +107,32 @@ export const CreatePostsScreen = () => {
           ]}
         >
           <View>
-            <View style={styles.photoContainer}>
-              <View style={styles.photo}>
-                <TouchableOpacity>
-                  <CameraIcon />
-                </TouchableOpacity>
+            {photoUri ? (
+              <View style={styles.photoContainer}>
+                <Image source={{ uri: photoUri }} style={styles.photo} />
               </View>
-            </View>
+            ) : (
+              <Camera
+                style={styles.photoContainer}
+                type={Camera.Constants.Type.back}
+                ref={cameraRef}
+              >
+                <TouchableOpacity onPress={makePhoto}>
+                  <View style={styles.photoIcon}>
+                    <CameraIcon />
+                  </View>
+                </TouchableOpacity>
+                <Image />
+              </Camera>
+            )}
+
             <Text style={styles.text}>Завантажте фото</Text>
             <View>
               <TextInput
                 style={styles.input}
                 placeholder="Назва..."
+                value={photoName}
+                onChangeText={setPhotoName}
                 onFocus={() => setIsKeyboardVisible(true)}
                 onBlur={() => setIsKeyboardVisible(false)}
               />
@@ -57,17 +141,34 @@ export const CreatePostsScreen = () => {
                 <TextInput
                   style={[styles.input, styles.locationInput]}
                   placeholder="Місцевість..."
+                  value={locationName}
+                  onChangeText={setLocationName}
                   onFocus={() => setIsKeyboardVisible(true)}
                   onBlur={() => setIsKeyboardVisible(false)}
                 />
               </View>
             </View>
-            <TouchableOpacity style={globalStyles.disabledButton}>
-              <Text style={globalStyles.disabledButtonText}>Опубліковати</Text>
-            </TouchableOpacity>
+            {photoName !== "" && locationName !== "" ? (
+              <TouchableOpacity
+                style={globalStyles.button}
+                onPress={handlePostPhoto}
+              >
+                <Text style={globalStyles.buttonText}>Опубліковати</Text>
+              </TouchableOpacity>
+            ) : (
+              <View style={globalStyles.disabledButton}>
+                <Text style={globalStyles.disabledButtonText}>
+                  Опубліковати
+                </Text>
+              </View>
+            )}
           </View>
           <View style={{ flex: 1 }} />
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setPhotoUri(null);
+            }}
+          >
             <View style={styles.bottomContainer}>
               <TrashIcon />
             </View>
@@ -104,7 +205,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 
-  photo: {
+  photoIcon: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -115,6 +216,12 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
 
     borderRadius: 30,
+  },
+
+  photo: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 8,
   },
 
   text: {
